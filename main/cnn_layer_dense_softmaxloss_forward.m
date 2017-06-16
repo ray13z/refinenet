@@ -157,6 +157,7 @@ function output_info=do_forward(input_info, mc_info)
 
 assert(isa(mc_info.gt_label_data, 'double'));
 
+% verify inputs and outputs to identify changes to eigen_loss
 output_x = vl_nnloss(input_info.x, mc_info.gt_label_data, [], 'loss', 'softmaxlog') ;
 
 output_info=[];

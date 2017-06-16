@@ -111,8 +111,8 @@ train_opts.epoch_task_num_min=1000;
 train_opts.epoch_task_num_max=2000;
 train_opts.epoch_run_max_task_one_class=100;
 
-train_opts.epoch_task_gen_type_train='class_sample';
-% train_opts.epoch_task_gen_type_train='random';
+% train_opts.epoch_task_gen_type_train='class_sample';
+train_opts.epoch_task_gen_type_train='random';
 
 
 
@@ -208,8 +208,8 @@ data_crop_config=[];
 
 data_crop_config.do_crop=true;
 
-data_crop_config.gen_crop_point_type='class_sample';
-% data_crop_config.gen_crop_point_type='random';
+% data_crop_config.gen_crop_point_type='class_sample';
+data_crop_config.gen_crop_point_type='random';
 
 data_crop_config.crop_box_step_ratio=0.2;
 data_crop_config.crop_box_size=run_config.crop_box_size;

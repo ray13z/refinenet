@@ -6,8 +6,8 @@
 % 1. Training demo on PASCAL VOC 2012 dataset
 
 % We here demonstrate the training on the original PASCAL VOC 2012 dataset for semantic segmentation.
-% Before running this demo file for training, you need to 
-% download the PASCAL VOC 2012 dataset and place it at: 
+% Before running this demo file for training, you need to
+% download the PASCAL VOC 2012 dataset and place it at:
 % ../datasets/voc2012_trainval
 
 
@@ -25,7 +25,7 @@
 % get stable on the validation set. You need to manually stop the running of this training code.
 
 % Stage-2: chose one cached model, initialize from this model, and using a
-% lower learning rate (e.g., multiplied by 0.1) to perform further training. 
+% lower learning rate (e.g., multiplied by 0.1) to perform further training.
 
 % For example, using the following setting for loading an existed model and
 % using a lower learning rate:
@@ -39,11 +39,11 @@
 % 4. Verify your trained model with performance evaluation:
 
 % This demo file shows the training on the original PASCAL VOC 2012 dataset for semantic segmentation.
-% This dataset consists of 1464 training images and 1449 validation images. 
-% For this dataset, the training will take around 3 days using a Titan-X card, 
+% This dataset consists of 1464 training images and 1449 validation images.
+% For this dataset, the training will take around 3 days using a Titan-X card,
 % including the training with a decreased learning rate.
 
-% After training, the intersection over union (IoU) score of the trained model is supposed to be around 0.691. 
+% After training, the intersection over union (IoU) score of the trained model is supposed to be around 0.691.
 
 % If you cannot get similar result, please verify whether you are using our modified version of MatConvNet,
 % for which you need to replace the modified files in the original MatConvNet and compile after replacement.
@@ -79,12 +79,12 @@ model_name=['model_' datestr(now, 'YYYYmmDDHHMMSS')];
 
 
 
-ds_name='voc2012_trainval';
-gen_ds_info_fn=@my_gen_ds_info_voc;
+ds_name='nyud';
+gen_ds_info_fn=@rayner_gen_ds_info_nyud;
 
 
 % control the size of input images
-run_config.input_img_short_edge_min=450;
+run_config.input_img_short_edge_min=450;	% VERIFY
 run_config.input_img_short_edge_max=1100;
 
 
@@ -158,8 +158,8 @@ run_config.learning_rate=5e-4;
 run_config.epoch_num=600;
 
 % turn on this option to cache all data into memory, if it's possible
-% run_config.cache_data_mem=true;
-run_config.cache_data_mem=false;
+run_config.cache_data_mem=true;
+% run_config.cache_data_mem=false;
 
 % random crop training:
 run_config.crop_box_size=400;
@@ -237,5 +237,3 @@ diary off
 
 
 end
-
-

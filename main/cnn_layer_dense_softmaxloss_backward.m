@@ -45,6 +45,7 @@ c=mc_info.gt_label_data;
 X=input_info.x;
 dzdy=output_info.dzdx;
 
+% verify inputs and outputs to identify changes to eigen_loss
 Y = vl_nnloss(X, c, dzdy, 'loss', 'softmaxlog') ;
 
 input_info.dzdx=Y;

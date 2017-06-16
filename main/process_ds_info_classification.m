@@ -20,7 +20,7 @@ assert(class_num<2^8);
 class_label_values_imgs=cell(img_num, 1);
 class_idxes_imgs=cell(img_num, 1);
 mask_files=cell(img_num, 1);
-pixel_count_classes=zeros(class_num, 1);
+%pixel_count_classes=zeros(class_num, 1);
 
 assert(~ds_config.use_dummy_gt)
 mask_cmap = VOClabelcolormap(256);
@@ -41,12 +41,13 @@ for img_idx=1:img_num
 
         one_label_value=one_class_label_values(tmp_idx);
         one_class_idx=find(one_label_value==class_label_values, 1);
-        assert(~isempty(one_class_idx));
+        % debug
+        % assert(~isempty(one_class_idx));
 
         tmp_sel=mask_data==one_label_value;
         class_idxes_mask_data(tmp_sel)=one_class_idx;
 
-        pixel_count_classes(one_class_idx)=pixel_count_classes(one_class_idx)+nnz(tmp_sel);
+        %pixel_count_classes(one_class_idx)=pixel_count_classes(one_class_idx)+nnz(tmp_sel);
 
         tmp_class_exist_flags(one_class_idx)=true;
 

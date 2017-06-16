@@ -12,19 +12,19 @@
 # ENABLE_CUDNN -- Set to YES to enable CUDNN support. This will also likely require
 # ENABLE_IMREADJPEG -- Set to YES to compile the function VL_IMREADJPEG()
 
-ENABLE_GPU ?=
-ENABLE_CUDNN ?=
+ENABLE_GPU ?= yes
+ENABLE_CUDNN ?= yes
 ENABLE_IMREADJPEG ?= yes
 ENABLE_DOUBLE ?= yes
 DEBUG ?=
-ARCH ?= maci64
+ARCH ?= glnxa64
 
 # Configure MATLAB
-MATLABROOT ?= /Applications/MATLAB_R2015a.app
+MATLABROOT ?= /usr/local/matlabR2016a
 
 # Configure CUDA and CuDNN. CUDAMETHOD can be either 'nvcc' or 'mex'.
-CUDAROOT ?= /Developer/NVIDIA/CUDA-6.5
-CUDNNROOT ?= $(CURDIR)/local/
+CUDAROOT ?= /usr/local/cuda-8.0/
+CUDNNROOT ?= /usr/local/cuda-8.0/lib64/
 CUDAMETHOD ?= $(if $(ENABLE_CUDNN),nvcc,mex)
 
 # Remark: each MATLAB version requires a particular CUDA Toolkit version.
