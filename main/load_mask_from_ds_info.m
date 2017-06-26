@@ -17,7 +17,7 @@ function mask_data=load_mask_from_ds_info(mask_data_info, img_idx)
     if strcmp(fileext, '.mat')
         mask_data = my_load_file(full_mask_file, true);
         mask_data=mask_data.class_idx_mask_data;
-    else if strcmp(fileext, '.matx')
+    elseif strcmp(fileext, '.matx')
         mask_data = my_load_file(full_mask_file(1:(end-1)), true);
         mask_data=mask_data.depths2;
     else

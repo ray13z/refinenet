@@ -186,6 +186,14 @@ switch lower(opts.loss)
       % null labels denote instances that should be skipped
       instanceWeights = cast(c ~= 0) ;
     end
+  
+  case {'eigenloss'}
+
+     % No op
+
+  case {'huberloss'}
+
+     % No op
 
   otherwise
     error('Unknown loss ''%s''.', opts.loss) ;
@@ -246,14 +254,35 @@ if nargin <= 2 || isempty(dzdy)
       %t = log(1 + exp(-c.*X)) ;
       a = -c.*x ;
       b = max(0, a) ;
-      t = b + log(exp(-b) + exp(a-b)) ;
+      t = b + log(exp(-b) + exp(a-b)) ; 
     case 'hinge'
       t = max(0, 1 - c.*x) ;
+    case 'eigenloss'
+      n = numel(c);
+      valid_x = x(:) .* sign(x(:)); % Handle negative log values
+      valid_x = valid_x + (valid_x == 0);   % --.
+      c = c + (c==0);                       % --'-- Handle log(0)
+      d = log(valid_x) - log(c(:));
+      sum_square_d = sum(d.^2, 2);
+      sqare_sum_d = sum(d, 2).^2;
+      t = sum_square_d / n - 0.5*sqare_sum_d / (n)^2;
+    case 'huberloss'
+      delta = 0.5;
+      a = abs(x(:) - c(:));
+      small = a <= delta;
+      large = ~small;
+      sqx = 0.5 .* a(small).^2;
+      linx = delta .* a(large) - 0.5 * delta^2;
+      t = sum(sqx) + sum(linx);
+      if(t > 100000000)
+          keyboard;
+      end
   end
   if ~isempty(instanceWeights)
     y = instanceWeights(:)' * t(:) ;
   else
     y = sum(t(:));
+    y = min(realmax('single'), y); % Handle exploding values - what should the clip be?
   end
 else
   if ~isempty(instanceWeights)
@@ -293,6 +322,23 @@ else
       y = - dzdy .* c ./ (1 + exp(c.*x)) ;
     case 'hinge'
       y = - dzdy .* c .* (c.*x < 1) ;
+    case 'eigenloss'
+      n = numel(c);
+      valid_x = x .* sign(x); % to handle negative log values
+      valid_x = valid_x + (valid_x == 0);   % --.
+      c = c + (c==0);                       % --'-- Handle log(0)
+%       y = dzdy .* 2 ./ n .* ( log(valid_x) - log(c) ) ./ valid_x .* (1-1/n);
+      y = dzdy .* (n^2-1)/n .* 2 .* ( log(valid_x) - log(c) ) ./ valid_x ;
+      y(y > realmax('single') | isnan(y)) = realmax('single'); % Handle exploding values
+    case 'huberloss'
+      delta = 0.5;
+      a = x - c;
+      small = abs(a) <= delta;
+      large = ~small;
+      y = gpuArray(zeros(size(c), 'single'));
+      y(small) = a(small);
+      y(large) = delta .* sign(a(large));
+	  y(y > realmax('single') | isnan(y)) = realmax('single'); % Handle exploding values
   end
 end
 

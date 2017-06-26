@@ -79,7 +79,7 @@ if ~isempty(exclude_node_flags)
 end
 
 class_num=class_info.class_num;
-assert(class_num==input_feat_map_size(3));
+assert(class_num==1);  % input_feat_map_size(3)
 
 mc_info=[];
 mc_info.class_num=class_num;
@@ -108,7 +108,7 @@ function predict_info=gen_predict_info(mc_info, predict_scores)
     my_check_valid_numeric(predict_scores);
     map_size=size(predict_scores);
     
-    assert(map_size(3)==mc_info.class_num);
+%     assert(map_size(3)==mc_info.class_num);
     assert(all(map_size(1:2)==mc_info.node_map_size));
     
     predict_scores=single(predict_scores);
@@ -158,8 +158,9 @@ function output_info=do_forward(input_info, mc_info)
 assert(isa(mc_info.gt_label_data, 'double'));
 
 % verify inputs and outputs to identify changes to eigen_loss
-output_x = vl_nnloss(input_info.x, mc_info.gt_label_data, [], 'loss', 'softmaxlog') ;
-
+% output_x = vl_nnloss(input_info.x, mc_info.gt_label_data, [], 'loss', 'softmaxlog') ;
+output_x = vl_nnloss(input_info.x, mc_info.gt_label_data, [], 'loss', 'huberloss') ;
+fprintf('loss = %d\n', output_x);
 output_info=[];
 output_info.is_group_data=false;
 output_info.x=output_x;

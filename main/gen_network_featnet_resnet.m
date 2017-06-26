@@ -37,6 +37,7 @@ My_net_util.fix_padding_resnet(dag_net);
 
 layers=cell(0);
 
+% debug: Output layer
 one_layer=[];
 one_layer.type='my_custom';
 one_layer.custom_type='dagnn_wrapper';

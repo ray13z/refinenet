@@ -78,7 +78,8 @@ for layer_idx=1:layer_num
         
     input_info=data_info.ref.output_info_layers{layer_idx};
     l = net_info.ref.layers{layer_idx} ;
-    is_simple_layer= ~strcmp(l.type, 'my_custom');
+    is_simple_layer= ~strcmp(l.type, 'my_custom');  % Will probably need to 
+                                                    % change this
    
    
     if bp_turn_on_layer==layer_idx
