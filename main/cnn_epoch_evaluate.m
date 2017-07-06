@@ -150,15 +150,20 @@ function pixel_result=gen_predict_result(pixel_results, class_info)
     img_num=length(pixel_results);
 
     pixel_con_mat=zeros(class_num, class_num);
+%     pixel_con_mat=zeros(size(pixel_results{1}.confusion_mat));
+    acc_global = 0.0; % mine
 
     for img_idx_idx=1:img_num
         one_pixel_result=pixel_results{img_idx_idx};
-        pixel_con_mat=pixel_con_mat+one_pixel_result.confusion_mat;        
+%         pixel_con_mat=pixel_con_mat+one_pixel_result.confusion_mat;
+        pixel_con_mat=pixel_con_mat+sum(one_pixel_result.confusion_mat(:));
+        acc_global = acc_global + one_pixel_result.accuracy_global;
     end
 
 
     pixel_result=seg_eva_gen_result_from_con_mat(pixel_con_mat, exclude_class_idxes);
-
+    
+    pixel_result.accuracy_global = acc_global/img_num;
     predict_result=[];
     predict_result.class_num=class_num;
     predict_result.pixel_result=pixel_result;

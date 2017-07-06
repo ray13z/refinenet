@@ -47,7 +47,7 @@ dzdy=output_info.dzdx;
 
 % verify inputs and outputs to identify changes to eigen_loss
 % Y = vl_nnloss(X, c, dzdy, 'loss', 'softmaxlog') ;
-Y = vl_nnloss(X, c, dzdy, 'loss', 'huberloss') ;
+Y = vl_nnloss(X, c, dzdy, 'loss', 'eigenloss') ;
 fprintf('mean(dzdx) = %d\n', mean(Y(:)));
 input_info.dzdx=Y;
 input_info.dzdw=[];

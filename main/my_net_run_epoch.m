@@ -30,7 +30,7 @@ work_info_epoch.ref.epoch_config_time=epoch_config_time;
 
 do_run_batch(opts, imdb, work_info, net_config, work_info_epoch);
 
-
+% WUT?
 valid_batch_count=work_info_epoch.ref.valid_batch_count;
 if valid_batch_count>0
     net_run_opts.epoch_evaluate_fn(work_info, opts, imdb, net_config, work_info_epoch);

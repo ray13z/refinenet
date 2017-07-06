@@ -31,6 +31,9 @@ function output_info=cnn_layer_dense_softmaxloss_forward(input_info, layer, work
     
     
     if stageout_info.gen_prediction_info
+        if(any(isnan(gather(tmp_input_info.x))))
+            keyboard
+        end
         output_info.mc_predict_info=gen_predict_info(mc_info, tmp_input_info.x);
     end
     
@@ -159,7 +162,7 @@ assert(isa(mc_info.gt_label_data, 'double'));
 
 % verify inputs and outputs to identify changes to eigen_loss
 % output_x = vl_nnloss(input_info.x, mc_info.gt_label_data, [], 'loss', 'softmaxlog') ;
-output_x = vl_nnloss(input_info.x, mc_info.gt_label_data, [], 'loss', 'huberloss') ;
+output_x = vl_nnloss(input_info.x, mc_info.gt_label_data, [], 'loss', 'eigenloss') ;
 fprintf('loss = %d\n', output_x);
 output_info=[];
 output_info.is_group_data=false;

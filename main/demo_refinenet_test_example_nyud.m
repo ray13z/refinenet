@@ -37,8 +37,9 @@ result_dir=fullfile('../cache_data', 'test_examples_nyud', result_name);
 ds_config.img_data_dir='../datasets/example_imgs_nyud';
 
 
-% using a trained model
-run_config.trained_model_path='../model_trained/refinenet_res101_nyud.mat';
+% using a trained model 
+% run_config.trained_model_path='../model_trained/refinenet_res101_nyud.mat';
+run_config.trained_model_path='../cache_data/nyud/tmp/snapshot';
 ds_config.class_info=gen_class_info_nyud();
 
 
