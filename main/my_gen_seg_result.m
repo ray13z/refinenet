@@ -2,7 +2,7 @@
 
 
 
-function result_info=my_gen_seg_result(seg_param, ds_info, predict_info)
+function result_info=my_gen_seg_result(seg_param, ds_info, predict_info, prediction)
     
     result_info=[];
     
@@ -60,13 +60,13 @@ function result_info=my_gen_seg_result(seg_param, ds_info, predict_info)
     end
        
     
-    do_save_results(ds_info, seg_param, predict_mask, score_map_org, predict_result_densecrf);
+    do_save_results(ds_info, seg_param, predict_mask, score_map_org, predict_result_densecrf, prediction);
       
 end
 
 
 
-function do_save_results(ds_info, seg_param, predict_mask_net, score_map_org, predict_result_densecrf)
+function do_save_results(ds_info, seg_param, predict_mask_net, score_map_org, predict_result_densecrf, prediction)
 
     img_idx=seg_param.img_idx;
     eva_param=seg_param.eva_param;
@@ -81,8 +81,9 @@ function do_save_results(ds_info, seg_param, predict_mask_net, score_map_org, pr
     if eva_param.save_predict_mask
         tmp_dir=eva_param.predict_result_dir_mask;
         mkdir_notexist(tmp_dir);
-        one_cache_file=fullfile(tmp_dir, [img_name '.png']);
-        imwrite(predict_mask_data, class_info.mask_cmap, one_cache_file);
+        one_cache_file=fullfile(tmp_dir, [img_name '.mat']);
+%         imwrite(predict_mask_data, class_info.mask_cmap, one_cache_file);
+        save(one_cache_file, 'prediction')
         
     end
     
